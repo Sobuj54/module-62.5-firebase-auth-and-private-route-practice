@@ -14,12 +14,14 @@ const auth = getAuth(app);
 
 const Context = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // getting the currently logged in user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("current user : ", currentUser);
       setUser(currentUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -39,7 +41,7 @@ const Context = ({ children }) => {
     return signOut(auth);
   };
 
-  const userInfo = { user, signUp, logIn, logOut };
+  const userInfo = { user, loading, signUp, logIn, logOut };
 
   return (
     // set context provider

@@ -8,6 +8,7 @@ import Login from "./components/Login/Login";
 import Bookings from "./components/Bookings/Bookings";
 import SignUp from "./components/Signup/Signup";
 import Context from "./context/Context";
+import PrivateRoute from "./private/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/bookings",
-        element: <Bookings></Bookings>,
+        element: (
+          <PrivateRoute>
+            <Bookings></Bookings>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/signup",
