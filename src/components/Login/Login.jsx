@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Context";
 import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
   const { logIn, googleLogIn } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(true);
   const navigate = useNavigate();
   //   getting location
   const location = useLocation();
@@ -45,8 +46,8 @@ const Login = () => {
   };
 
   return (
-    <div className="mt-10 text-center border-2 border-primary rounded w-2/5 mx-auto p-7">
-      <h4 className="text-3xl mb-4 font-semibold">Login</h4>
+    <div className="mt-10  border-2 border-primary rounded w-2/5 mx-auto p-7">
+      <h4 className="text-3xl text-center mb-4 font-semibold">Login</h4>
       <form onSubmit={handleLogIn} className="w-64 mx-auto">
         <input
           type="email"
@@ -56,21 +57,26 @@ const Login = () => {
           required
         />
         <input
-          type="password"
+          type={showPassword ? "password" : "text "}
           name="password"
           placeholder="Password"
-          className="input  input-secondary w-full mb-4  max-w-xs"
+          className="input  input-secondary w-full  max-w-xs"
           required
         />
+        <p className="mb-4">
+          <small onClick={() => setShowPassword(!showPassword)}>
+            show password
+          </small>
+        </p>
         <button className="btn btn-primary w-full">Login</button>
       </form>
 
-      <div className="mt-3">
+      <div className="mt-3 text-center">
         <button onClick={handleGoogleLogIn} className="btn btn-outline">
           <FaGoogle /> <span className="ml-3">Login With Google</span>
         </button>
       </div>
-      <div className="mt-3">
+      <div className="mt-3 text-center">
         <p>
           <small>
             New to this site?
