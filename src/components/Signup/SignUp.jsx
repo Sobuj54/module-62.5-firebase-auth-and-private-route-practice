@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/Context";
 
 const SignUp = () => {
+  const { signUp } = useContext(AuthContext);
+
+  const handleSignUP = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    signUp(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        form.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="mt-10 text-center border-2 border-primary rounded w-2/5 mx-auto p-7">
       <h4 className="text-3xl mb-4 font-semibold">Signup</h4>
-      <form className="w-64 mx-auto">
+      <form onSubmit={handleSignUP} className="w-64 mx-auto">
         <input
           required
           type="email"
