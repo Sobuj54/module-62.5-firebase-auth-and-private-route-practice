@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 // create context and export it
@@ -14,6 +15,7 @@ const auth = getAuth(app);
 const Context = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // getting the currently logged in user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("current user : ", currentUser);
@@ -22,15 +24,22 @@ const Context = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // handling sing up
   const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
+  // handling log in
   const logIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const userInfo = { user, signUp, logIn };
+  // handling sign out
+  const logOut = () => {
+    return signOut(auth);
+  };
+
+  const userInfo = { user, signUp, logIn, logOut };
 
   return (
     // set context provider
