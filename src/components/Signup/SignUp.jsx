@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Context";
+import { sendEmailVerification } from "firebase/auth";
 
 const SignUp = () => {
   const { signUp } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSignUP = (event) => {
     event.preventDefault();
@@ -18,6 +20,10 @@ const SignUp = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         form.reset();
+        sendEmailVerification(result.user).then(() => {
+          console.log("sent verification email.");
+        });
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);

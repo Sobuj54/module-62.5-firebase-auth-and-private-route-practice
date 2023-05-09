@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Context";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-  const { logIn } = useContext(AuthContext);
+  const { logIn, googleLogIn } = useContext(AuthContext);
   const navigate = useNavigate();
   //   getting location
   const location = useLocation();
@@ -32,6 +33,17 @@ const Login = () => {
       });
   };
 
+  const handleGoogleLogIn = () => {
+    googleLogIn()
+      .then((result) => {
+        const googleUser = result.user;
+        console.log(googleUser);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="mt-10 text-center border-2 border-primary rounded w-2/5 mx-auto p-7">
       <h4 className="text-3xl mb-4 font-semibold">Login</h4>
@@ -52,6 +64,12 @@ const Login = () => {
         />
         <button className="btn btn-primary w-full">Login</button>
       </form>
+
+      <div className="mt-3">
+        <button onClick={handleGoogleLogIn} className="btn btn-outline">
+          <FaGoogle /> <span className="ml-3">Login With Google</span>
+        </button>
+      </div>
       <div className="mt-3">
         <p>
           <small>
